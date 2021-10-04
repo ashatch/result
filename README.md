@@ -2,7 +2,7 @@
 
 [![Build Status](https://app.travis-ci.com/ashatch/result.svg?branch=main)](https://app.travis-ci.com/ashatch/result)
 
-`Result` monad with two subtypes `Success` and `Failure`.
+A Java `Result` monad with two subtypes `Success` and `Failure`.
 
 ## Example
 
