@@ -4,7 +4,7 @@
 
     <groupId>net.andrewhatch</groupId>
     <artifactId>result</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>result</name>
@@ -31,7 +31,7 @@
         <connection>scm:git:git@github.com:ashatch/result.git</connection>
         <developerConnection>scm:git:git@github.com:ashatch/result.git</developerConnection>
         <url>git@github.com:ashatch/result.git</url>
-        <tag>result-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
