@@ -30,8 +30,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com/ashatch/result.git</connection>
-        <developerConnection>scm:git:git@github.com/ashatch/result.git</developerConnection>
+        <connection>scm:git:git@github.com:ashatch/result.git</connection>
+        <developerConnection>scm:git:git@github.com:ashatch/result.git</developerConnection>
         <url>git@github.com:ashatch/result.git</url>
         <tag>HEAD</tag>
     </scm>
