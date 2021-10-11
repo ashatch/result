@@ -13,32 +13,17 @@ See [the tests](src/test/java/net/andrewhatch/result) for details on how to use 
 ### Maven
 
 ```xml
-<project>
-    <repositories>
-      <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-      </repository>
-    </repositories>
-
-    <dependency>
-      <groupId>com.github.ashatch</groupId>
-      <artifactId>result</artifactId>
-      <version>main-SNAPSHOT</version>
-    </dependency>
-</project>
+<dependency>
+  <groupId>net.andrewhatch</groupId>
+  <artifactId>result</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
 
 ### Gradle
 
 ```groovy
-allprojects {
-  repositories {
-    maven { url 'https://jitpack.io' }
-  }
-}
-
 dependencies {
-  implementation 'com.github.ashatch:result-monad:main-SNAPSHOT'
+  implementation 'net.andrewhatch:result:1.0.0'
 }
 ```
