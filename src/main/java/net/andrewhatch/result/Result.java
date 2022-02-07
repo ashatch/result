@@ -2,52 +2,79 @@ package net.andrewhatch.result;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-public abstract class Result<SuccessT, FailureT> implements Serializable {
-  private Result() {}
+import static net.andrewhatch.result.Support.consumeAndDrop;
 
-  public static <S, F> Result<S, F> success(
+public interface Result<SuccessT, FailureT> extends Serializable {
+  static <S, F> Result<S, F> success(
       final S value
   ) {
     return new Success<>(value);
   }
 
-  public static <S, F> Result<S, F> failure(
+  static <S, F> Result<S, F> failure(
       final F value
   ) {
     return new Failure<>(value);
   }
 
-  public static <S, F> Result<S, F> success(
+  static <S, F> Result<S, F> success(
       final S value,
-      final Class<F> __failureClassType
+      final Class<F> failureClassType
   ) {
     return new Success<>(value);
   }
 
-  public static <S, F> Result<S, F> failure(
+  static <S, F> Result<S, F> failure(
       final F value,
-      final Class<S> __successClassType
+      final Class<S> successClassType
   ) {
     return new Failure<>(value);
   }
 
-  public abstract <R, T extends R, U extends R> R either(
+  <R, T extends R, U extends R> R either(
       final Function<SuccessT, T> onSuccess,
       final Function<FailureT, U> onFailure
   );
 
-  public <T, U extends T> T then(
-      final Function<Result<SuccessT, FailureT>, U> biMapper
+  default void apply(
+      final Consumer<SuccessT> successConsumer,
+      final Consumer<FailureT> failureConsumer
   ) {
-    return biMapper.apply(this);
+    either(
+        consumeAndDrop(successConsumer),
+        consumeAndDrop(failureConsumer)
+    );
   }
 
-  private static final class Success<S, F> extends Result<S, F> {
+  default <T, U extends T> T then(
+      final Function<Result<SuccessT, FailureT>, U> f
+  ) {
+    return f.apply(this);
+  }
+
+  default <U> Result<U, FailureT> map(Function<SuccessT, U> func) {
+    return either(
+        s -> success(func.apply(s)),
+        Result::failure
+    );
+  }
+
+  default <U> Result<U, FailureT> flatMap(Function<SuccessT, Result<U, FailureT>> func) {
+    return either(
+        func::apply,
+        Result::failure
+    );
+  }
+
+  final class Success<S, F> implements Result<S, F> {
+    private static final long serialVersionUID = 1L;
+
     private final S value;
 
-    private Success(S value) {
+    private Success(final S value) {
       this.value = value;
     }
 
@@ -79,10 +106,12 @@ public abstract class Result<SuccessT, FailureT> implements Serializable {
     }
   }
 
-  private static final class Failure<S, F> extends Result<S, F> {
+  final class Failure<S, F> implements Result<S, F> {
+    private static final long serialVersionUID = 1L;
+
     private final F value;
 
-    private Failure(F value) {
+    private Failure(final F value) {
       this.value = value;
     }
 
